@@ -77,7 +77,6 @@ final class MovieQuizViewController: UIViewController {
         }
         imageView.layer.masksToBounds = true
         imageView.layer.borderWidth = 8
-        imageView.layer.cornerRadius = 20
         imageView.layer.borderColor = isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
         yesButton.isEnabled = false
         noButton.isEnabled = false
@@ -87,15 +86,8 @@ final class MovieQuizViewController: UIViewController {
             self.noButton.isEnabled = true
         }
     }
-    private func isYesCorrect() {
-        if questions[currentQuestionIndex].correctAnswer == true {
-            showAnswerResult(isCorrect: true)
-        } else {
-            showAnswerResult(isCorrect: false)
-        }
-    }
-    private func isNoCorrect() {
-        if questions[currentQuestionIndex].correctAnswer == false {
+    private func isCorrect(_ answer: Bool) {
+        if questions[currentQuestionIndex].correctAnswer == answer {
             showAnswerResult(isCorrect: true)
         } else {
             showAnswerResult(isCorrect: false)
@@ -140,10 +132,12 @@ final class MovieQuizViewController: UIViewController {
     }
     
     @IBAction private func yesButtonClicked(_ sender: UIButton) {
-        isYesCorrect()
+        let answer = true
+        isCorrect(answer)
     }
     @IBAction private func noButtonClicked(_ sender: UIButton) {
-        isNoCorrect()
+        let answer = false
+        isCorrect(answer)
     }
 }
 
