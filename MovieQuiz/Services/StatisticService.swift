@@ -18,8 +18,6 @@ final class StatisticServiceImplementation: StatisticService {
     private let decoder: JSONDecoder
     private let encoder: JSONEncoder
     
-    private let dateProvider: () -> Date
-    
     var correct: Int {
         get {
             userDefaults.integer(forKey: Keys.correct.rawValue)
@@ -79,38 +77,23 @@ final class StatisticServiceImplementation: StatisticService {
         self.total += amount
         self.gamesCount += 1
         
-        let date = dateProvider()
-            let currentGame = BestGame(correct: count, total: amount, date: date)
+        let currentGame = BestGame(correct: count, total: amount, date: Date())
             
-            if let previousBestGame = bestGame {
-                if currentGame.correct > previousBestGame.correct {
-                    bestGame = currentGame
-                }
-            } else {
+        if let previousBestGame = bestGame {
+            if currentGame.correct > previousBestGame.correct {
                 bestGame = currentGame
             }
+        } else {
+            bestGame = currentGame
         }
+    }
         
-//
-//        let date = dateProvider()
-//        let currentBestGame = BestGame(correct: correct, total: total, date: date)
-//
-//        if let previousBestGame = bestGame {
-//            if currentBestGame > previousBestGame {
-//                bestGame = currentBestGame
-//            }
-//        } else {
-//            bestGame = currentBestGame
-//        }
-//    }
-    
+
     init(
         decoder: JSONDecoder = JSONDecoder(),
-        encoder: JSONEncoder = JSONEncoder(),
-        dateProvider: @escaping () -> Date = { Date() }
+        encoder: JSONEncoder = JSONEncoder()
     ) {
         self.decoder = decoder
         self.encoder = encoder
-        self.dateProvider = dateProvider
     }
 }
