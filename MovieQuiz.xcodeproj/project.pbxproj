@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		A3063D6E2A4EE1920038146F /* AlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3063D6D2A4EE1920038146F /* AlertModel.swift */; };
 		A3063D702A4EE3200038146F /* AlertPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3063D6F2A4EE3200038146F /* AlertPresenter.swift */; };
+		A32D1DFD2A68291300FDE4FA /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32D1DFC2A68291300FDE4FA /* NetworkClient.swift */; };
+		A32D1DFF2A6854CB00FDE4FA /* MostPopularMovies.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32D1DFE2A6854CB00FDE4FA /* MostPopularMovies.swift */; };
+		A32D1E012A685FFD00FDE4FA /* MoviesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32D1E002A685FFC00FDE4FA /* MoviesLoader.swift */; };
 		A35FE6382A5DED380023F183 /* BestGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35FE6372A5DED380023F183 /* BestGame.swift */; };
 		A360196A2A44537100771710 /* QuestionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36019692A44537100771710 /* QuestionFactory.swift */; };
 		A360196D2A4459D600771710 /* QuizStepViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A360196C2A4459D600771710 /* QuizStepViewModel.swift */; };
@@ -33,6 +36,9 @@
 /* Begin PBXFileReference section */
 		A3063D6D2A4EE1920038146F /* AlertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertModel.swift; sourceTree = "<group>"; };
 		A3063D6F2A4EE3200038146F /* AlertPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresenter.swift; sourceTree = "<group>"; };
+		A32D1DFC2A68291300FDE4FA /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
+		A32D1DFE2A6854CB00FDE4FA /* MostPopularMovies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MostPopularMovies.swift; sourceTree = "<group>"; };
+		A32D1E002A685FFC00FDE4FA /* MoviesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesLoader.swift; sourceTree = "<group>"; };
 		A35FE6372A5DED380023F183 /* BestGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestGame.swift; sourceTree = "<group>"; };
 		A36019692A44537100771710 /* QuestionFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionFactory.swift; sourceTree = "<group>"; };
 		A360196C2A4459D600771710 /* QuizStepViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizStepViewModel.swift; sourceTree = "<group>"; };
@@ -96,6 +102,8 @@
 				A36019722A44838C00771710 /* QuestionFactoryProtocol.swift */,
 				A3EA96082A4CAADC000FD47A /* QuestionFactoryDelegate.swift */,
 				A3F1E6FE2A58A482008E3290 /* StatisticService.swift */,
+				A32D1DFC2A68291300FDE4FA /* NetworkClient.swift */,
+				A32D1E002A685FFC00FDE4FA /* MoviesLoader.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -108,6 +116,7 @@
 				A36019702A445A1D00771710 /* QuizQuestion.swift */,
 				A3063D6D2A4EE1920038146F /* AlertModel.swift */,
 				A35FE6372A5DED380023F183 /* BestGame.swift */,
+				A32D1DFE2A6854CB00FDE4FA /* MostPopularMovies.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -229,17 +238,20 @@
 				AD5EE5DE284D7887003966EF /* UIColor+Extensions.swift in Sources */,
 				A35FE6382A5DED380023F183 /* BestGame.swift in Sources */,
 				A3063D702A4EE3200038146F /* AlertPresenter.swift in Sources */,
+				A32D1DFF2A6854CB00FDE4FA /* MostPopularMovies.swift in Sources */,
 				A3063D6E2A4EE1920038146F /* AlertModel.swift in Sources */,
 				AD7AFA552836189F00399704 /* Array+Extensions.swift in Sources */,
 				A36019732A44838C00771710 /* QuestionFactoryProtocol.swift in Sources */,
 				A3EA96092A4CAADC000FD47A /* QuestionFactoryDelegate.swift in Sources */,
 				AD1ABAB62831907B00B3E448 /* MovieQuizViewController.swift in Sources */,
+				A32D1DFD2A68291300FDE4FA /* NetworkClient.swift in Sources */,
 				A3F1E6FF2A58A482008E3290 /* StatisticService.swift in Sources */,
 				A360196D2A4459D600771710 /* QuizStepViewModel.swift in Sources */,
 				A36019712A445A1D00771710 /* QuizQuestion.swift in Sources */,
 				A360196A2A44537100771710 /* QuestionFactory.swift in Sources */,
 				AD77F5742857F8810062FB14 /* Date+Extensions.swift in Sources */,
 				AD1ABAB22831907B00B3E448 /* AppDelegate.swift in Sources */,
+				A32D1E012A685FFD00FDE4FA /* MoviesLoader.swift in Sources */,
 				A360196F2A445A0E00771710 /* QuizResultsViewModel.swift in Sources */,
 				AD1ABAB42831907B00B3E448 /* SceneDelegate.swift in Sources */,
 			);
@@ -387,7 +399,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = N29P9VDV4Y;
+				DEVELOPMENT_TEAM = 582BQV8Z7D;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MovieQuiz/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -403,7 +415,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ru.yandex.practicum.MovieQuiz;
+				PRODUCT_BUNDLE_IDENTIFIER = "ru.yandex.practicum.MovieQuiz-ds-dimaz";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -417,7 +429,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = N29P9VDV4Y;
+				DEVELOPMENT_TEAM = 582BQV8Z7D;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MovieQuiz/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -433,7 +445,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ru.yandex.practicum.MovieQuiz;
+				PRODUCT_BUNDLE_IDENTIFIER = "ru.yandex.practicum.MovieQuiz-ds-dimaz";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
