@@ -28,6 +28,18 @@ final class MovieQuizPresenter {
         return convertedModel
     }
     
+    func didReceiveNextQuestion(question: QuizQuestion?) {
+        guard let question = question else {
+            return
+        }
+        
+        currentQuestion = question
+        let viewModel = convert(model: question)
+        DispatchQueue.main.async { [weak self] in
+            self?.viewController?.show(quiz: viewModel)
+        }
+    }
+    
     private func isCorrect(_ answer: Bool) {
         guard let currentQuestion = currentQuestion else {
             return
