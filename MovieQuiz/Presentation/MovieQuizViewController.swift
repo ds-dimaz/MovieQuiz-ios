@@ -52,27 +52,16 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, 
         noButton.isEnabled = false
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
             guard let self = self else { return }
-            self.showNextQuestionOrResults()
+            self.presenter.correctAnswers = self.correctAnswers
+            self.presenter.questionFactory = self.questionFactory
+            self.presenter.showNextQuestionOrResults()
+            imageView.layer.borderWidth = 0
             self.yesButton.isEnabled = true
             self.noButton.isEnabled = true
         }
     }
     
-    private func showNextQuestionOrResults() {
-        if presenter.isLastQuestion() {
-            showFinalResults()
-        } else {
-            presenter.switchToNextQuestion()
-            
-            if presenter.currentQuestion != nil {
-                questionFactory?.requestNextQuestion()
-            }
-            
-            imageView.layer.borderWidth = 0
-        }
-    }
-    
-    private func showFinalResults() {
+    func showFinalResults() {
         statisticService?.store(correct: correctAnswers, total: presenter.questionsAmount)
         
         guard let statisticService = statisticService,
