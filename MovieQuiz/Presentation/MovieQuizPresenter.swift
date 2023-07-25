@@ -5,18 +5,40 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
     
     private weak var viewController: MovieQuizViewController?
     
-    var currentQuestion: QuizQuestion?
-    var correctAnswers = 0
+    private var currentQuestion: QuizQuestion?
+    private var correctAnswers = 0
     private var currentQuestionIndex = 0
+    private let statisticService: StatisticService!
     private var questionFactory: QuestionFactoryProtocol?
-    let questionsAmount: Int = 10
+    private let questionsAmount: Int = 10
     
     init(viewController: MovieQuizViewController) {
         self.viewController = viewController
         
+        statisticService = StatisticServiceImplementation()
+        
         questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
         questionFactory?.loadData()
         viewController.showLoadingIndicator()
+    }
+    
+    func makeResultsMessage() -> String {
+        statisticService.store(correct: correctAnswers, total: questionsAmount)
+        
+        guard let statisticService = statisticService,
+              let bestGame = statisticService.bestGame else {
+            assertionFailure("couldn't reach best game result")
+            return "error"
+        }
+        
+        let text =
+            """
+                Ваш результат: \(correctAnswers)/\(questionsAmount)
+                Количество сыгранных квизов: \(statisticService.gamesCount)
+                Рекорд: \(bestGame.correct)/\(bestGame.total) (\(bestGame.date.dateTimeString))
+                Средняя точность: \(String(format: "%.2f", statisticService.totalAccuracy))%
+            """
+        return text
     }
     
     func didLoadDataFromServer() {
@@ -74,7 +96,7 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         }
     }
     
-    func showNextQuestionOrResults() {
+    private func proceedToNextQuestionOrResults() {
         if self.isLastQuestion() {
             viewController?.showFinalResults()
         } else {
@@ -85,14 +107,29 @@ final class MovieQuizPresenter: QuestionFactoryDelegate {
         }
     }
     
+    private func proceedWithAnswer(isCorrect: Bool) {
+        if isCorrect {
+            correctAnswers += 1
+        }
+        
+        viewController?.highlightImageBorder(isCorrectAnswer: isCorrect)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+            guard let self = self else { return }
+            viewController?.unhighlightImageBorder()
+            self.proceedToNextQuestionOrResults()
+        }
+    }
+    
+    
     private func isCorrect(_ answer: Bool) {
         guard let currentQuestion = currentQuestion else {
             return
         }
         if currentQuestion.correctAnswer == answer {
-            viewController?.showAnswerResult(isCorrect: true)
+            self.proceedWithAnswer(isCorrect: true)
         } else {
-            viewController?.showAnswerResult(isCorrect: false)
+            self.proceedWithAnswer(isCorrect: false)
         }
     }
     

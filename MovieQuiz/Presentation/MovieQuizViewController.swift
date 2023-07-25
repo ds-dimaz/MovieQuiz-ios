@@ -11,7 +11,6 @@ final class MovieQuizViewController: UIViewController {
     private var presenter: MovieQuizPresenter!
     
     private var alertPresenter: AlertPresenter?
-    private var statisticService: StatisticService?
     
     // MARK: - Lifecycle
     
@@ -27,9 +26,8 @@ final class MovieQuizViewController: UIViewController {
         showLoadingIndicator()
         
         alertPresenter = AlertPresenter(delegate: self)
-        statisticService = StatisticServiceImplementation()
+//        statisticService = StatisticServiceImplementation()
         
-//        questionFactory?.loadData()
     }
     
     func show(quiz step: QuizStepViewModel) {
@@ -38,40 +36,24 @@ final class MovieQuizViewController: UIViewController {
         counterLabel.text = step.questionNumber
     }
     
-    func showAnswerResult(isCorrect: Bool) {
-        if isCorrect {
-            presenter.correctAnswers += 1
-        }
+    func highlightImageBorder(isCorrectAnswer: Bool) {
         imageView.layer.masksToBounds = true
         imageView.layer.borderWidth = 8
-        imageView.layer.borderColor = isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
+        imageView.layer.borderColor = isCorrectAnswer ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
         yesButton.isEnabled = false
         noButton.isEnabled = false
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-            guard let self = self else { return }
-            self.presenter.showNextQuestionOrResults()
-            imageView.layer.borderWidth = 0
-            self.yesButton.isEnabled = true
-            self.noButton.isEnabled = true
-        }
+    }
+    
+    func unhighlightImageBorder() {
+        imageView.layer.borderWidth = 0
+        self.yesButton.isEnabled = true
+        self.noButton.isEnabled = true
     }
     
     func showFinalResults() {
-        statisticService?.store(correct: presenter.correctAnswers, total: presenter.questionsAmount)
         
-        guard let statisticService = statisticService,
-              let bestGame = statisticService.bestGame else {
-            assertionFailure("couldn't reach best game result")
-            return
-        }
+        let text = presenter.makeResultsMessage()
         
-        let text =
-            """
-                Ваш результат: \(presenter.correctAnswers)/\(presenter.questionsAmount)
-                Количество сыгранных квизов: \(statisticService.gamesCount)
-                Рекорд: \(bestGame.correct)/\(bestGame.total) (\(bestGame.date.dateTimeString))
-                Средняя точность: \(String(format: "%.2f", statisticService.totalAccuracy))%
-            """
         let viewModel = AlertModel(
             title: "Этот раунд окончен!",
             message: text,
