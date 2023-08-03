@@ -19,6 +19,8 @@ extension AlertPresenter: AlertPresenterDelegate {
             message: viewModel.message,
             preferredStyle: .alert)
         
+        alert.view?.accessibilityIdentifier = "Game results"
+        
         let action = UIAlertAction(title: viewModel.buttonText, style: .default) { _ in
             viewModel.buttonAction()
         }
